@@ -56,6 +56,14 @@ class NetworkUtil {
           parsedJson["routes"].isNotEmpty) {
         result.points = decodeEncodedPolyline(
             parsedJson["routes"][0]["overview_polyline"]["points"]);
+        result.meters = double.tryParse(
+                "${parsedJson["routes"][0]["legs"][0]["distance"]["value"]}") ??
+            0.0;
+        result.duration = Duration(
+            seconds: int.tryParse(
+                    "${parsedJson["routes"][0]["legs"][0]["duration"]["value"]}") ??
+                0) as Duration;
+        print("flutter_polyline_points: ${parsedJson}");
       } else {
         result.errorMessage = parsedJson["error_message"];
       }
